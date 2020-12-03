@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!-- Wii Meta XML Schema -->
+    <xs:element name="app">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="name" type="xs:string" />
+                <xs:element name="coder" type="xs:string" />
+                <xs:element name="version" type="xs:string" />
+                <xs:element name="release_date" type="xs:string" />
+                <xs:element name="arguments" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <!-- WARNING: <arg> elements may contain double-hyphens, which create invalid XML when commented-out -->
+                            <xs:element name="arg" type="xs:string" maxOccurs="unbounded" />
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="no_ios_reload" type="xs:string" minOccurs="0" />
+                <xs:element name="ahb_access" type="xs:string" minOccurs="0" />
+                <xs:element name="short_description" type="xs:string" minOccurs="0" />
+                <xs:element name="long_description" type="xs:string" minOccurs="0" />
+            </xs:all>
+            <xs:attribute name="version" type="xs:string" use="required" />
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
