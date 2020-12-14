@@ -1,25 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <!-- Wii Meta XML Schema -->
+
+    <xs:simpleType name="releaseDate">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="8" />
+            <xs:maxLength value="14" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:element name="app">
         <xs:complexType>
             <xs:all>
-                <xs:element name="name" type="xs:string" />
-                <xs:element name="coder" type="xs:string" />
-                <xs:element name="version" type="xs:string" />
-                <xs:element name="release_date" type="xs:string" />
+                <xs:element name="name" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The name of the application.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="author" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The name of the person or group that wrote the code for the program.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="coder" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            Alias of author since Homebrew Channel (HBC) version 1.1.0
+                        </xs:appinfo>
+                        <xs:documentation>
+                            The name of the person or group that wrote the code for the program.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="version" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            The version of the application.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="release_date" type="releaseDate" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            It has to be a timestamp using this format: YYYYmmddHHMMSS (HBC code shows YYYYmmdd will work as well)
+                        </xs:appinfo>
+                        <xs:documentation>
+                            The date the application was released.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
                 <xs:element name="arguments" minOccurs="0">
                     <xs:complexType>
+                        <xs:annotation>
+                            <xs:appinfo>
+                                WARNING: arg elements contain double-hyphens, which create invalid XML when commented-out.
+                            </xs:appinfo>
+                            <xs:documentation>
+                                List of arguments passed to the loaded application as argc and argv.
+                            </xs:documentation>
+                        </xs:annotation>
                         <xs:sequence>
-                            <!-- WARNING: <arg> elements may contain double-hyphens, which create invalid XML when commented-out -->
-                            <xs:element name="arg" type="xs:string" maxOccurs="unbounded" />
+                            <xs:element name="arg" type="xs:string" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:appinfo>
+                                        WARNING: arg elements contain double-hyphens, which create invalid XML when commented-out.
+                                    </xs:appinfo>
+                                    <xs:documentation>
+                                        Argument passed to the loaded application as argc and argv. Example: --loaded-by-hbc
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="no_ios_reload" type="xs:string" minOccurs="0" />
-                <xs:element name="ahb_access" type="xs:string" minOccurs="0" />
-                <xs:element name="short_description" type="xs:string" minOccurs="0" />
-                <xs:element name="long_description" type="xs:string" minOccurs="0" />
+                <xs:element name="ahb_access" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            True if present.
+                        </xs:appinfo>
+                        <xs:documentation>
+                            Requests full hardware access (AHBPROT).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="no_ios_reload" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>
+                            True if present. Alias of ahb_access since Homebrew Channel (HBC) version 1.1.0
+                        </xs:appinfo>
+                        <xs:documentation>
+                            Requests full hardware access (AHBPROT).
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="short_description" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            This is displayed on the main menu of the Homebrew Channel (before you select an application) and is used as a space to add a few words to describe the program.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="long_description" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>
+                            This is displayed once the application is chosen. It describes the program and its function in great detail, and can be used to elaborate on a program's controls.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
             </xs:all>
             <xs:attribute name="version" type="xs:string" use="required" />
         </xs:complexType>
